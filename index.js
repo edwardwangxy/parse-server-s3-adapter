@@ -38,6 +38,7 @@ class S3Adapter {
     this._globalCacheControl = options.globalCacheControl;
     this._encryption = options.ServerSideEncryption;
     this._generateKey = options.generateKey;
+
     // Optional FilesAdaptor method
     this.validateFilename = options.validateFilename;
 
@@ -53,7 +54,9 @@ class S3Adapter {
       s3Options.accessKeyId = options.accessKey;
       s3Options.secretAccessKey = options.secretKey;
     }
-
+    if (options.endpoint) {
+      s3Options.endpoint = new AWS.Endpoint(options.endpoint);
+    }
     Object.assign(s3Options, options.s3overrides);
 
     this._s3Client = new AWS.S3(s3Options);
